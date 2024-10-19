@@ -1,0 +1,23 @@
+<h2>{{title}}</h2>
+<ul>
+  <li *ngFor="let user of users">{{user.id}}: {{user.name}}</li>
+</ul>
+<ul>
+  @for(user of users; track user.name) {
+    <li>{{user}}</li>
+  }
+</ul>
+<table class="table">
+  <thead>
+    <tr><th>id</th><th>name</th><th>email</th></tr>
+  </thead>
+  <tbody>
+    @for(user of users; track user.name) {
+      <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+      </tr>
+    }
+  </tbody>
+</table>
