@@ -13,7 +13,7 @@
   </thead>
   <tbody>
     @for(user of users; track user.name) {
-      <tr>
+      <tr (click)="selectUser(user)">
         <td>{{user.id}}</td>
         <td>{{user.name}}</td>
         <td>{{user.email}}</td>
@@ -21,3 +21,11 @@
     }
   </tbody>
 </table>
+
+<p *ngIf="selectedUser">Selected user: {{selectedUser.name}}</p>
+
+<p>Selected user:
+@if(selectedUser) {
+   {{selectedUser.name}}
+}
+</p>
