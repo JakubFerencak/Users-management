@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../entities/user';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,19 @@ export class UsersService {
     new User("FeroService", "fero@jano.sk"),
     {name: "AnkaService", email: "anka@anka.sk", password: "qwerty"}
   ];
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getSynchronousUsers(): User[] {
     return this.users;
   }
 
-  getUsers():Observable<User[]> {
+  getLocalUsers():Observable<User[]> {
     return of(this.users);
+  }
+
+  getUsers():Observable<User[]> {
+    return this.http.get<User[]>("http://localhost:8080/users").pipe(
+      map(jsonUsers => jsonUsers.map(jsonUser => User.clone(jsonUser)))
+    );
   }
 }

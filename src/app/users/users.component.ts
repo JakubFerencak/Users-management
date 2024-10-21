@@ -12,17 +12,23 @@ import { UsersService } from '../../services/users.service';
 })
 export class UsersComponent implements OnInit {
   title = 'Users';
-  users: User[] = [
-    new User("Jano", "jano@jano.sk", 1, new Date()),
-    new User("Fero", "fero@jano.sk"),
-    {name: "Anka", email: "anka@anka.sk", password: "qwerty"}
-  ];
+  users: User[] = [];
   selectedUser?: User;
+  showError = false;
 
   constructor(private usersService: UsersService) {}
 
   ngOnInit(): void {
-    this.usersService.getUsers().subscribe(u => this.users = u);
+    this.usersService.getUsers().subscribe({
+      next: u => {
+        this.users = u;
+        this.showError = false;
+      },
+      error: err => {
+        console.log("Chyba: ", err);
+        this.showError = true;
+      }
+    });
   }
 
   selectUser(user: User) {
