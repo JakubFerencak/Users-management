@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../entities/user';
 import { map, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Auth } from '../entities/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,9 @@ export class UsersService {
     return this.http.get<User[]>("http://localhost:8080/users").pipe(
       map(jsonUsers => jsonUsers.map(jsonUser => User.clone(jsonUser)))
     );
+  }
+
+  login(auth: Auth): Observable<string> {
+    return this.http.post("http://localhost:8080/login", auth, {responseType: 'text'});
   }
 }
