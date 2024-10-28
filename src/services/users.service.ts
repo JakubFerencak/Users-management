@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../entities/user';
-import { map, Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth } from '../entities/auth';
 
 @Injectable({
@@ -13,6 +13,8 @@ export class UsersService {
     new User("FeroService", "fero@jano.sk"),
     {name: "AnkaService", email: "anka@anka.sk", password: "qwerty"}
   ];
+  token: string = '';
+
   constructor(private http: HttpClient) { }
 
   getSynchronousUsers(): User[] {
@@ -29,7 +31,20 @@ export class UsersService {
     );
   }
 
-  login(auth: Auth): Observable<string> {
-    return this.http.post("http://localhost:8080/login", auth, {responseType: 'text'});
+  login(auth: Auth): Observable<boolean> {
+    return this.http.post("http://localhost:8080/login", auth, {responseType: 'text'}).pipe(
+      map(token => {
+        this.token = token;
+        return true;
+      }),
+      catchError(error => {
+        if (error instanceof HttpErrorResponse) {
+          if (error.status == 401) {
+            return of(false);
+          }
+        }
+        return throwError(() => error);
+      })
+    );
   }
 }

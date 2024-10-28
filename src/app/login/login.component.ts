@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Auth } from '../../entities/auth';
 import { FormsModule } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +13,21 @@ import { UsersService } from '../../services/users.service';
 })
 export class LoginComponent {
   auth: Auth = new Auth("abc","xyz");
+  errorMessage = '';
   usersService = inject(UsersService);
+  router = inject(Router);
 
   onSubmit() {
     //odoslať auth ako rest request
     console.log("odosielam ", this.auth);
-    this.usersService.login(this.auth).subscribe(token => console.log("token: ", token));
+    this.usersService.login(this.auth).subscribe(success => {
+      if (success) {
+        // idem na autorizovanu sekciu
+        this.router.navigateByUrl("/users");
+      } else {
+        // dal som zle heslo alebo login
+        this.errorMessage = "Wrong name or password, try again.";
+      }
+    });
   }
 }
