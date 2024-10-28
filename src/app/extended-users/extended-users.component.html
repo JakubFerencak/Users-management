@@ -1,0 +1,28 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>E-mail</th>
+      <th>Active</th>
+      <th>Last login</th>
+      <th>Groups</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for(user of users; track user.id) {
+      <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.active}}</td>
+        <td>{{user.lastLogin}}</td>
+        <td> 
+          @for(group of user.groups; track group.id) {
+            {{group.name}},
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

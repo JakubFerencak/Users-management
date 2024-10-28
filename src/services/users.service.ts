@@ -9,11 +9,11 @@ import { Auth } from '../entities/auth';
 })
 export class UsersService {
   users: User[] = [
-    new User("JanoService", "jano@jano.sk", 1, new Date()),
+    new User("JanoService", "jano@jano.sk", 1),
     new User("FeroService", "fero@jano.sk"),
-    {name: "AnkaService", email: "anka@anka.sk", password: "qwerty"}
   ];
   token: string = '';
+  serverUrl = "http://localhost:8080/";
 
   constructor(private http: HttpClient) { }
 
@@ -26,13 +26,19 @@ export class UsersService {
   }
 
   getUsers():Observable<User[]> {
-    return this.http.get<User[]>("http://localhost:8080/users").pipe(
+    return this.http.get<User[]>(this.serverUrl + "users").pipe(
+      map(jsonUsers => jsonUsers.map(jsonUser => User.clone(jsonUser)))
+    );
+  }
+
+  getExtendedUsers():Observable<User[]> {
+    return this.http.get<User[]>(this.serverUrl + "users/" + this.token).pipe(
       map(jsonUsers => jsonUsers.map(jsonUser => User.clone(jsonUser)))
     );
   }
 
   login(auth: Auth): Observable<boolean> {
-    return this.http.post("http://localhost:8080/login", auth, {responseType: 'text'}).pipe(
+    return this.http.post(this.serverUrl + "login", auth, {responseType: 'text'}).pipe(
       map(token => {
         this.token = token;
         return true;

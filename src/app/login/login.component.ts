@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  auth: Auth = new Auth("abc","xyz");
+  auth: Auth = new Auth("Peter","sovy");
   errorMessage = '';
   usersService = inject(UsersService);
   router = inject(Router);
@@ -20,13 +20,18 @@ export class LoginComponent {
   onSubmit() {
     //odoslať auth ako rest request
     console.log("odosielam ", this.auth);
-    this.usersService.login(this.auth).subscribe(success => {
-      if (success) {
-        // idem na autorizovanu sekciu
-        this.router.navigateByUrl("/users");
-      } else {
-        // dal som zle heslo alebo login
-        this.errorMessage = "Wrong name or password, try again.";
+    this.usersService.login(this.auth).subscribe({
+      next: success => {
+        if (success) {
+          // idem na autorizovanu sekciu
+          this.router.navigateByUrl("/extended-users");
+        } else {
+          // dal som zle heslo alebo login
+          this.errorMessage = "Wrong name or password, try again.";
+        }
+      },
+      error: err => {
+        this.errorMessage = "Server down!";
       }
     });
   }
