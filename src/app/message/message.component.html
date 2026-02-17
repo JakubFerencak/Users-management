@@ -1,0 +1,12 @@
+@if(message.value && message.type === 'error') {
+    <div class="alert alert-danger" role="alert">
+        {{message.value}}
+    </div>
+  }
+
+  @if(message.value && message.type === 'success') {
+    <div class="alert alert-succes" role="alert">
+        {{message.value}}
+    </div>
+  }
+  

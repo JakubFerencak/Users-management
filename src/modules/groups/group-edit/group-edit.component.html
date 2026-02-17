@@ -1,0 +1,14 @@
+<form >
+    <h2> Adding new group </h2>
+          <label for="name" class="col-form-label">Name</label>
+          <input type="text" id="name" class="form-control" name="name" required minlength="3" maxlength="20" [ngModel]="group.name"
+           #nameModel="ngModel">
+        @if(nameModel.invalid && nameModel.touched){
+        <div class="invalid-feedback" style="display: block">
+          Name must have 3 to 20 characters
+        </div>
+        }
+        <label for="permissions" class="col-form-label">Permissions</label>
+        <input type="text" id="permissions" class="form-control" name="permissions" required [ngModel]>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>

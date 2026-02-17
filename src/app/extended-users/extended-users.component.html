@@ -7,6 +7,7 @@
       <th>Active</th>
       <th>Last login</th>
       <th>Groups</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -22,7 +23,19 @@
             {{group.name}},
           }
         </td>
+        <td>
+          <button type="button" class="btn btn-primary" (click)="editUserClick(user)" data-bs-toggle="modal" data-bs-target="#userEditModal"><i class="bi bi-pencil"></i></button>
+          
+          <button type="button" class="btn btn-danger" (click)="deleteUser(user)"><i class="bi bi-trash"></i></button>
+        </td>
       </tr>
     }
   </tbody>
 </table>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userEditModal" (click)="addUserClick()">
+  Add new user
+</button>
+
+<user-edit [user]="selectedUser" [action]="actionWithUser" (userchange)="userEdited($event)"></user-edit> 

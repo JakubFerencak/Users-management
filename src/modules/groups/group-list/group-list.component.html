@@ -1,0 +1,6 @@
+<h2>List of groups</h2>
+<ul>
+  @for(group of groups; track group.id) {
+    <li><a routerLink="../detail/{{group.id}}">{{group.name}}</a></li>
+  }
+</ul>

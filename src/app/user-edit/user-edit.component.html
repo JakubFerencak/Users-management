@@ -1,0 +1,64 @@
+<form (ngSubmit)="saveUser()" #formModel="ngForm">
+  <div class="modal fade" id="userEditModal" tabindex="-1" aria-labelledby="userEditModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="userEditModalLabel">
+        @if (action === 'add') {
+          Adding new user
+        } @else {
+          Editing user {{inputUser.name}}
+        }
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div>{{getUserJson()}}</div>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto"><label for="name" class="col-form-label">Name</label></div>
+            <div class="col-auto">
+              <input type="text" id="name" class="form-control" [(ngModel)]="user.name" name="name" required minlength="3" maxlength="20" #nameModel="ngModel">
+            </div>
+            @if(nameModel.invalid && nameModel.touched){
+            <div class="invalid-feedback" style="display: block">
+              Name must have 3 to 20 characters
+            </div>
+            }
+        </div>
+        <div class="row g-3 align-items-center">
+          <div class="col-auto"><label for="email" class="col-form-label">E-mail</label></div>
+          <div class="col-auto"><input type="email" id="email" class="form-control" [(ngModel)]="user.email" name="email" required email #emailModel="ngModel"></div>
+          @if(emailModel.invalid && emailModel.touched){
+            <div class="invalid-feedback" style="display: block">
+              E-mail must be in correct form
+            </div>
+            }
+        </div>
+        <div class="row g-3 align-items-center">
+          <div class="col-auto"><label for="password" class="col-form-label">Password</label></div>
+          <div class="col-auto"><input type="password" id="password" class="form-control" [(ngModel)]="user.password" name="password"></div>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="active" [(ngModel)]="user.active" name="active">
+          <label class="form-check-label" for="active">Active user</label>
+        </div>
+        <p>Is member of groups:</p>
+        @for(groupModel of groupsModel; track groupModel.group.id){
+          <div>
+            <input class="form-check-input" type="checkbox" id="group_{{groupModel.group.id}}" [(ngModel)]="groupModel.selected" name="group_{{groupModel.group.id}}">
+            <label class="form-check-label" for="group_{{groupModel.group.id}}">
+              {{groupModel.group.name}}
+            </label>
+          </div>
+        }
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+          [disabled]="formModel.invalid"
+        >Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
