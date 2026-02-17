@@ -1,27 +1,62 @@
-# UsersManagement
+# Users Management
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.8.
+A user management application built with Angular 18.
 
-## Development server
+## Description
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+A simple web application for managing users with the following features:
+- User authentication and login
+- Display list of users
+- Edit and delete users
+- Manage user groups
 
-## Code scaffolding
+## Requirements
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Node.js (version 18+)
+- npm
+
+## Installation
+
+```bash
+npm install
+```
+
+## Development Server
+
+```bash
+npm start
+```
+
+The application will be available at `http://localhost:4200/`. The application automatically reloads when you change source files.
+
+## Project Structure
+
+```
+src/
+├── app/              # Main components
+├── services/         # Services (UsersService, MessageService)
+├── guards/           # Authentication guards and resolvers
+├── entities/         # Data models (User, Auth, Group)
+└── modules/          # Modules (Groups module)
+```
+
+## Key Components
+
+- **Login** - Authentication component with login functionality
+- **Users** - User list and management
+- **Groups** - User groups management
+- **Navigation** - Navbar with links to different sections
+
+## Running Tests
+
+```bash
+npm test
+```
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+npm run build
+```
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Build artifacts will be stored in the `dist/` directory.
